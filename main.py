@@ -11,12 +11,10 @@ Hedef tur boyunca kullandığınız sayıların toplamının maksimum olması.
     {7,  9,  5,  14, 14}
 """
 
-"""
-Yukarı = 0
-Sol = 1
-Aşağı = 2
-Sağ = 3
-"""
+UP = 0
+LEFT = 1
+DOWN = 2
+RIGHT = 3
 
 matrix = [
     [-1, -1, -1, -1, -1, -1, -1],
@@ -74,26 +72,26 @@ class Traveller:
         y = p[1]
         cameFrom = m.cameFrom
 
-        if cameFrom == 0: # Yukarı
+        if cameFrom == UP: # Yukarı
             y -= 1
-        elif cameFrom == 1: # Sol
+        elif cameFrom == LEFT: # Sol
             x -= 1
-        elif cameFrom == 2: # Aşağı
+        elif cameFrom == DOWN: # Aşağı
             y += 1
-        elif cameFrom == 3: # Sağ
+        elif cameFrom == RIGHT: # Sağ
             x += 1
         return [x,y]
 
     def canGoStartingPos(self, m: MemoryCell):
         x = m.pos[0]
         y = m.pos[1]
-        if x == self.startingPos[0] and y - 1 == self.startingPos[1] and m.cameFrom != 0:
+        if x == self.startingPos[0] and y - 1 == self.startingPos[1] and m.cameFrom != UP:
             return True
-        if x - 1 == self.startingPos[0] and y == self.startingPos[1] and m.cameFrom != 1:
+        if x - 1 == self.startingPos[0] and y == self.startingPos[1] and m.cameFrom != LEFT:
             return True
-        if x == self.startingPos[0] and y + 1 == self.startingPos[1] and m.cameFrom != 2:
+        if x == self.startingPos[0] and y + 1 == self.startingPos[1] and m.cameFrom != DOWN:
             return True
-        if x + 1 == self.startingPos[0] and y == self.startingPos[1] and m.cameFrom != 3:
+        if x + 1 == self.startingPos[0] and y == self.startingPos[1] and m.cameFrom != RIGHT:
             return True
         return False
 
@@ -131,18 +129,18 @@ class Traveller:
         new_cameFrom = 0
         new_prevSeen = m.previouslySeen.copy()
 
-        if dir == 0:    # Yukarı
+        if dir == UP:    # Yukarı
             y -= 1
-            new_cameFrom = 2
-        elif dir == 1:  # Sol
+            new_cameFrom = DOWN
+        elif dir == LEFT:  # Sol
             x -= 1
-            new_cameFrom = 3
-        elif dir == 2:  # Aşağı
+            new_cameFrom = RIGHT
+        elif dir == DOWN:  # Aşağı
             y += 1
-            new_cameFrom = 0
-        elif dir == 3:  # Sağ
+            new_cameFrom = UP
+        elif dir == RIGHT:  # Sağ
             x += 1
-            new_cameFrom = 1
+            new_cameFrom = LEFT
 
         new_p = [x,y]
 
@@ -161,16 +159,16 @@ class Traveller:
 
         # Yukarıyı kontrol et
         if matrix[y - 1][x] not in m.previouslySeen:
-            ptg.append(0)
+            ptg.append(UP)
         # Solu kontrol et
         if matrix[y][x - 1] not in m.previouslySeen:
-            ptg.append(1)
+            ptg.append(LEFT)
         # Aşağıyı kontrol et
         if matrix[y + 1][x] not in m.previouslySeen:
-            ptg.append(2)
+            ptg.append(DOWN)
         # Sağı kontrol et
         if matrix[y][x + 1] not in m.previouslySeen:
-            ptg.append(3)
+            ptg.append(RIGHT)
         return ptg
 
 
